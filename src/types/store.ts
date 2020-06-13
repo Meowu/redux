@@ -36,6 +36,7 @@ declare const $CombinedState: unique symbol
  * symbol property, it's not expected to be unumerable, and the value is
  * typed as always undefined, so its never expected to have a meaningful
  * value anyway. It just makes this type distinquishable from plain `{}`.
+ * 为什么需要跟 {} 区别开来。
  */
 export type CombinedState<S> = { readonly [$CombinedState]?: undefined } & S
 
