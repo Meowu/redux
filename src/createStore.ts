@@ -88,6 +88,7 @@ export default function createStore<
       throw new Error('Expected the enhancer to be a function.')
     }
 
+    // 如果传入 enhancer ，增强 createStore 函数。
     return enhancer(createStore)(
       reducer,
       preloadedState as PreloadedState<S>
@@ -98,7 +99,7 @@ export default function createStore<
     throw new Error('Expected the reducer to be a function.')
   }
 
-  let currentReducer = reducer
+  let currentReducer = reducer // 创建 store 传进来的 reducer 。一个 store 只有一个 reducer 。
   let currentState = preloadedState as S
   let currentListeners: (() => void)[] | null = []
   let nextListeners = currentListeners
@@ -246,6 +247,7 @@ export default function createStore<
     try {
       isDispatching = true
       // reducer 接收 state、action 参数。
+      // dispatch 调用 reducer 函数更新 state 。
       currentState = currentReducer(currentState, action)
     } finally {
       isDispatching = false
