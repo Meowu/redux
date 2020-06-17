@@ -173,10 +173,12 @@ export default function createStore<
 
     let isSubscribed = true
 
+    // 确保拷贝一份再 push 。
     ensureCanMutateNextListeners()
     nextListeners.push(listener)
 
     return function unsubscribe() {
+      // 避免多次调用。
       if (!isSubscribed) {
         return
       }
@@ -243,11 +245,13 @@ export default function createStore<
 
     try {
       isDispatching = true
+      // reducer 接收 state、action 参数。
       currentState = currentReducer(currentState, action)
     } finally {
       isDispatching = false
     }
 
+    // dispatch 之后触发回调。
     const listeners = (currentListeners = nextListeners)
     for (let i = 0; i < listeners.length; i++) {
       const listener = listeners[i]
@@ -286,6 +290,7 @@ export default function createStore<
     // the new state tree with any relevant data from the old one.
     dispatch({ type: ActionTypes.REPLACE } as A)
     // change the type of the store by casting it to the new store
+    // 返回初始化时的 store 。
     return (store as unknown) as Store<
       ExtendState<NewState, StateExt>,
       NewActions,
