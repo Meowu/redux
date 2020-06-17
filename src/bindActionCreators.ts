@@ -5,6 +5,7 @@ import {
   ActionCreatorsMapObject
 } from './types/actions'
 
+// 返回一个自动 dispatch 的函数，参数就是 actionCreator 的参数。
 function bindActionCreator<A extends AnyAction = AnyAction>(
   actionCreator: ActionCreator<A>,
   dispatch: Dispatch
@@ -58,6 +59,7 @@ export default function bindActionCreators(
   actionCreators: ActionCreator<any> | ActionCreatorsMapObject,
   dispatch: Dispatch
 ) {
+  // 如果传入一个函数，就是一个自动 dispatch 的函数。
   if (typeof actionCreators === 'function') {
     return bindActionCreator(actionCreators, dispatch)
   }
@@ -72,6 +74,7 @@ export default function bindActionCreators(
   }
 
   const boundActionCreators: ActionCreatorsMapObject = {}
+  // 批量创建同名的自动 dispatch 的函数。
   for (const key in actionCreators) {
     const actionCreator = actionCreators[key]
     if (typeof actionCreator === 'function') {
