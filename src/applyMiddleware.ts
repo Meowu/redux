@@ -60,6 +60,7 @@ export default function applyMiddleware(
     ...args: any[]
   ) => {
     const store = createStore(reducer, ...args)
+    // 这只是一个 slot 函数。
     let dispatch: Dispatch = () => {
       throw new Error(
         'Dispatching while constructing your middleware is not allowed. ' +
